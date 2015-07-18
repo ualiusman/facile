@@ -1,0 +1,103 @@
+﻿@model HandoverTracker.Models.Project
+
+@{
+    ViewBag.Title = "Project Details";
+    Layout = "~/Views/Shared/_WorkLayout.cshtml";
+}
+
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    <div class="row">
+        <div class="large-6 columns">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
+
+                <dd>
+                    @Html.Date(model => model.StartDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ExpectedEndDate)
+                </dt>
+
+                <dd>
+                    @Html.Date(model => model.ExpectedEndDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </dt>
+
+                <dd>
+                    @Html.Date(Model.EndDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </dl>
+        </div>
+        <div class="large-6 columns">
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Phase)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Phase)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProductOwnerID)
+                </dt>
+
+                <dd>
+                    @ViewBag.ProductOwner
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScrumMasterID)
+                </dt>
+
+                <dd>
+                    @ViewBag.ScrumMaster
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <p>
+
+        @if (User.IsInRole("Admin") || User.IsInRole("Product Owner"))
+        {
+           @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectID }) <span>|</span>
+           @Html.ActionLink("Delete", "Delete", new { id = Model.ProjectID }) <span>|</span>
+            
+        }
+        @Html.ActionLink("Back to List", "Index") |
+        @Html.ActionLink("Project Detail", "PDetail", new { id= Model.ProjectID })
+    </p>
+</fieldset>

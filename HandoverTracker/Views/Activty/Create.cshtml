@@ -1,0 +1,68 @@
+﻿@model HandoverTracker.Models.Activty
+
+@{
+    ViewBag.Title = "Create Activty";
+}
+
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.Name, new { required="required" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
+                        @Html.DropDownList("ActivtyType")
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <label>Role</label>
+                        @Html.CheckBoxList(ViewBag.Roles as List<SelectListItem>)
+                    </label>
+                </div>
+             </div>
+                <div class="row">
+                    <div class="large-6 columns">
+                        <label>
+                            <label>Output Artifact</label>
+                            @Html.DropDownList("OutputArtifacts")
+                        </label>
+                    </div>
+                    <div class="large-6 columns">
+                        <label>
+                            <label>Input Artifact</label>
+                            @Html.DropDownList("InputArtifacts")
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-12 columns">
+                        <button type="submit" value="Create" class="btn btn-default">Create</button>
+                    </div>
+                </div>
+            </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</fieldset>

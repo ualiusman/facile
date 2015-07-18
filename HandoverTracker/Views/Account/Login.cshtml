@@ -1,0 +1,79 @@
+﻿@model HandoverTracker.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+
+}
+
+<div>
+
+
+    <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+            <div class="row">
+                <div class="large-12 columns">
+
+                    <h2>@ViewBag.Title.</h2>
+                    <h4>Use a Facile account to log in.</h4>
+                    <hr />
+                </div>
+            </div>
+
+            @Html.ValidationSummary(true)
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.LabelFor(m => m.UserName, new { })
+
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.LabelFor(m => m.Password, new { })
+
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        Remember me?
+                        @*@Html.LabelFor(m => m.RememberMe)*@
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <button type="submit" value="Log in" >Log In</button>
+                    </label>
+                </div>
+            </div>
+            <p>
+                @Html.ActionLink("Register", "Register") if you don't have an account.
+            </p>
+        }
+    </section>
+</div>
+@*<div class="col-md-4">
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

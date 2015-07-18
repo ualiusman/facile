@@ -1,0 +1,101 @@
+﻿@model HandoverTracker.Models.Project
+
+@{
+    ViewBag.Title = "Create Project";
+}
+
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="large-12 columns">
+                    @Html.ValidationSummary(true)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.Name, new { required="required" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.StartDate, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.StartDate, new { required="required", type="date"})
+                        @Html.ValidationMessageFor(model => model.StartDate)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.ExpectedEndDate, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.ExpectedEndDate, new { required = "required", type = "date" })
+                        @Html.ValidationMessageFor(model => model.ExpectedEndDate)
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.EndDate, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.EndDate, new { type="date" })
+                        @Html.ValidationMessageFor(model => model.EndDate)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.ProductOwnerID, new { @class = "control-label col-md-2" })
+                        @Html.DropDownList("ProductOwners","[ Pick Out ]")
+                        @Html.ValidationMessageFor(model => model.ProductOwnerID)
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.ScrumMasterID, new { @class = "control-label col-md-2" })
+                        @Html.DropDownList("ScrumMasters","[ Pick Out ]")
+                        @Html.ValidationMessageFor(model => model.ScrumMasterID)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <label>Team Members</label>
+                        @Html.CheckBoxList(@ViewBag.TeamMembers as List<SelectListItem>)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                        @Html.TextAreaFor(model => model.Description)
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <button type="submit" value="Create" class="btn btn-default">Create</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</fieldset>

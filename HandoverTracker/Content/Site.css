@@ -1,0 +1,126 @@
+﻿
+
+input:focus,select:focus,textarea:focus{
+      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.middle-row {
+    min-height: 34em;
+}
+
+.top-bar-section ul li > a:hover {
+    background-color: #555555;
+    background: #272727;
+    color: white;
+}
+
+.hasChildren:before {
+    content: "";
+    float: left;
+}
+
+.hasChildren.active:before {
+    content: "";
+}
+
+
+.row {
+    max-width: 100.5rem;
+}
+
+.large-3 {
+    width: 15%;
+}
+
+.large-9 {
+    width: 85%;
+}
+
+.push-3 {
+    left: 15%;
+}
+
+.pull-9 {
+    right: 85%;
+}
+
+.submenu {
+    margin-left: 35px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+    #passport {
+            margin-top: 6em;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3em;
+        }
+
+        #passport:before, #passport:after {
+            content: " ";
+            display: table;
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        #passport .passport-left, #passport .passport-right {
+            position: relative;
+            padding-left: 1.15385em;
+            padding-right: 1.15385em;
+            width: 49%;
+            float: left;
+            padding: 30px;
+        }
+
+        #passport .passport-right {
+            border-left: 1px solid #e5e5e5;
+            background: #fff;
+        }
+
+        .field-validation-error, .validation-summary-errors
+        {
+            color:red;
+        }
+
+        #page-public
+        {
+            background-image:url(Images/21-grass-wallpaper.jpg);
+            background-repeat:no-repeat;
+            background-size:100%;
+        }
+
+
+@media screen and (max-width: 640px) {
+    .large-3 {
+    width: 0%;
+}
+
+
+
+.large-9 {
+    width: 100%;
+}
+
+.push-3 {
+    left: 0%;
+}
+
+.pull-9 {
+    right: 100%;
+}
+
+#passport .passport-left{
+    display:none;
+}
+
+ #passport .passport-right{
+            width: 100%;
+
+ }
+
+}

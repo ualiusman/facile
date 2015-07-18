@@ -1,0 +1,83 @@
+﻿@model HandoverTracker.Models.ProjectActivty
+
+@{
+    ViewBag.Title = "Activty";
+    Layout = "~/Views/Shared/_WorkLayout.cshtml";
+}
+
+<fieldset>
+    <legend>@ViewBag.Title</legend>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="large-12 columns">
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.ProjectActivtyID)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <label><b>Status</b></label>
+                        @Html.DisplayFor(model => model.Status)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>
+                        <label><b>Input Artifact</b></label>
+                        @Html.DisplayFor(model => model.Activty.InputArtifact.Name)
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        <label><b>Output Artifact</b></label>
+                        @Html.DisplayFor(model => model.Activty.OutputArtifact.Name)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <label><b>Roles</b></label>
+                        @foreach (var i in Model.Activty.ActivtyRoles)
+                        {
+                            <span>@i.RoleName</span><br />
+                        }
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <label><b>Content</b></label>
+                        <textarea rows="12"></textarea>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        <input type="file" name="name" value=" " />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <button type="submit" value="Save" class="btn btn-default">Done</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        
+        @Html.ActionLink("Back to List", "Type", new { id =(int)Session["pat"]  })
+    </div>
+</fieldset>

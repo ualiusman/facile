@@ -1,0 +1,63 @@
+﻿@model HandoverTracker.Models.UserViewModel
+
+<fieldset>
+    <legend>Account Info</legend>
+    @using (Html.BeginForm("ManageUserInfo", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.LabelFor(model => model.UserName)
+                        @Html.DisplayFor(model => model.UserName)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.FirstName, new { required = "required" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                        @Html.TextBoxFor(model => model.LastName, new { required = "required" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                    @Html.TextBoxFor(model => model.Email, new { required = "required", type = "email" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>
+                        @Html.DisplayNameFor(model => model.Roles)
+                        <br/>
+                        @foreach (var r in Model.Roles)
+                        {
+                            <span>@r</span><br />
+                        }
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <button type="submit" value="Save" class="btn btn-default">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+</fieldset>

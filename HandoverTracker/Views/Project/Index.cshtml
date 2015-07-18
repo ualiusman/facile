@@ -1,0 +1,37 @@
+﻿@model IEnumerable<HandoverTracker.Models.Project>
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<fieldset>
+    <legend>Projects</legend>
+    <p>
+        @if (User.IsInRole("Admin") || User.IsInRole("Product Owner"))
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    </p>
+
+    <ul class="small-block-grid-3">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div style="padding: 10px; color:white;  background-color: #008CBA;">
+                    <div>
+                        @Html.ActionLink(item.Name, "Details", new { id = item.ProjectID }, new { style="background-color:white; padding:5px; display:block"})
+                    </div>
+
+                    <div>
+                        <label style="color:#fff" title="Project Status">@item.Status</label>
+                    </div>
+                    <div>
+                        <label style="color:#fff;" title="Project Phase">@item.Phase</label>
+                    </div>
+                </div>
+
+            </li>
+        }
+    </ul>
+
+</fieldset>

@@ -1,0 +1,76 @@
+﻿@model HandoverTracker.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="large-12 columns">
+            <h4>Create a new account.</h4>
+            <hr />
+            @Html.ValidationSummary()
+        </div>
+    </div>
+   
+   
+    <div class="row">
+        <div class="large-12 columns">
+            <label>
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", required = "required" })
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            <label>
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "required", type = "text" })
+            </label>
+        </div>
+        <div class="large-6 columns">
+            <label>
+                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "required", type = "text" })
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <label>
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required", type = "email" })
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <label>
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", required = "required" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <label>
+                <button type="submit" value="Register">Register</button>
+            </label>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

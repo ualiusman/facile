@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Facile Handover System</title>
+    <link rel="shortcut icon" type="image/png" href="facile.ico" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+
+    </style>
+</head>
+<body>
+
+    <div class="off-canvas-wrap" data-offcanvas>
+        <div class="inner-wrap">
+            <nav class="tab-bar">
+                <section class="left-small">
+                    <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+                </section>
+
+                <nav class="top-bar hide-for-small">
+                    <ul class="title-area">
+                        <li class="name">
+                            <h1>
+                                <a href="#" onclick="return false" title="Foundation">Facile Handover System</a>
+                            </h1>
+                        </li>
+                    </ul>
+
+                    <section class="top-bar-section">
+                        <ul class="right">
+                            @*<li class="has-dropdown not-click">
+                                    <a href="http://foundation.zurb.com/learn/features.html" class="">Learn</a>
+                                    <ul class="dropdown">
+                                        <li class="title back js-generated"><h5><a href="#">« Back</a></h5></li>
+                                        <li><a class="parent-link js-generated" href="http://foundation.zurb.com/learn/features.html">Learn</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/features.html">Features</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/faq.html">FAQ</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/case-jacquelinewest.html">Case Studies</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/website-examples.html">Website Examples</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/video-started-with-foundation.html">Videos</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/training.html">Training</a></li>
+                                        <li><a href="http://foundation.zurb.com/learn/about.html">About</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-dropdown not-click">
+                                    <a href="http://foundation.zurb.com/templates.html" class="">Develop</a>
+                                    <ul class="dropdown">
+                                        <li class="title back js-generated"><h5><a href="#">« Back</a></h5></li>
+                                        <li><a class="parent-link js-generated" href="http://foundation.zurb.com/templates.html">Develop</a></li>
+                                        <li><a href="http://foundation.zurb.com/develop/addons-templates.html">Add-ons</a></li>
+                                        <li><a href="http://foundation.zurb.com/docs/">Docs</a></li>
+                                        <li><a href="http://foundation.zurb.com/develop/download.html">Download</a></li>
+                                        <li><a href="http://foundation.zurb.com/develop/contribute.html">Contribute</a></li>
+                                        <li><a href="http://foundation.zurb.com/develop/tools.html">Tools</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-dropdown not-click">
+                                    <a href="http://foundation.zurb.com/support/support.html" class="">Support</a>
+                                    <ul class="dropdown">
+                                        <li class="title back js-generated"><h5><a href="#">« Back</a></h5></li>
+                                        <li><a class="parent-link js-generated" href="http://foundation.zurb.com/support/support.html">Support</a></li>
+                                        <li><a href="http://foundation.zurb.com/support/support.html">Support Channels</a></li>
+                                        <li><a href="http://foundation.zurb.com/forum">Foundation Forum</a></li>
+                                        <li><a href="http://foundation.zurb.com/support/images-and-badges.html">Images &amp; Badges</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="http://foundation.zurb.com/business/services.html" class="">Business</a>
+                                </li>
+                                <li>
+                                    <a href="http://foundation.zurb.com/docs/" class="">Docs</a>
+                                </li>*@
+                            <li>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+
+                        </ul>
+                    </section>
+                </nav>
+
+                <section class="right-small hide-for-medium-up">
+                    <a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
+                </section>
+            </nav>
+
+            <!-- Off Canvas Menu -->
+            <aside class="left-off-canvas-menu">
+                <!-- whatever you want goes here -->
+                <ul>
+                    <li><a href="#">Item 1</a></li>
+
+                </ul>
+            </aside>
+
+            <aside class="right-off-canvas-menu">
+                <!-- whatever you want goes here -->
+                <ul>
+                    <li><a href="#">Item 1</a></li>
+
+                </ul>
+            </aside>
+
+            <!-- main content goes here -->
+            @Html.Partial("_TopMenu")
+
+
+            <div class="row middle-row">
+                <div class="large-12 columns">
+                    @RenderBody()
+                </div>
+                </div>
+
+
+
+                <!-- close the off-canvas menu -->
+                <a class="exit-off-canvas"></a>
+
+            </div>
+        </div>
+
+
+        <footer class="row">
+            <div class="large-12 columns">
+                <hr />
+                <div class="row">
+                    <div class="large-6 columns">
+                        <p>&copy; @DateTime.Now.Year - Facile Handover System</p>
+                    </div>
+                    <div class="large-6 columns">
+                        <ul class="inline-list right">
+                            <li><a href="#">Help</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/foundation")
+        @RenderSection("scripts", required: false)
+        <script>
+            $(document).foundation();
+        </script>
+
+    </body>
+</html>

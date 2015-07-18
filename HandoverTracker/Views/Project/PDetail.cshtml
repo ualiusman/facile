@@ -1,0 +1,288 @@
+﻿@model IEnumerable<HandoverTracker.Models.ProjectActivty>
+
+@{
+    Layout = "~/Views/Shared/_WorkLayout.cshtml";
+}
+
+<fieldset>
+    <legend>@ViewBag.Title Details</legend>
+    <ul class="tabs" data-tab>
+        <li class="tab-title active"><a href="#panel2">Pre-Delivery Phase</a></li>
+        <li class="tab-title"><a href="#panel3">Transition</a></li>
+        <li class="tab-title"><a href="#panel4">Post-Delivery Phase</a></li>
+    </ul>
+    <div class="tabs-content">
+        <div class="content active" id="panel2">
+            <!--Mangement Activties-->
+            <h5>Management Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.PDMangementActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!--Development Activties-->
+            <h5>Development Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.PDDevelopmentActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            <h5>Handover Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.PDHandoverActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+        <div class="content" id="panel3">
+            <h5>Management Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.TMangementActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            <h5>Handover Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.THandoverActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="content" id="panel4">
+            <h5>Management Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.PTDManagementActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            <h5>Handover Activties</h5>
+            <table style="width:100%;" class="responsive">
+                <tr>
+                    <th width="30%">
+                        Activty Name
+                    </th>
+                    <th width="20%">
+                        Input Artifact
+                    </th>
+                    <th width="20%">
+                        Output Artifact
+                    </th>
+                    <th width="30%">
+                        Roles
+                    </th>
+                </tr>
+                @foreach (var item in Model.Where(f => f.Activty.Type == (int)HandoverTracker.Models.ActivtyTypes.PTDManagementActivties))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.InputArtifact.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activty.OutputArtifact.Name)
+                        </td>
+                        <td>
+                            @foreach (var i in item.Activty.ActivtyRoles)
+                            {
+                                <span>@i.RoleName</span><br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</fieldset>
+
