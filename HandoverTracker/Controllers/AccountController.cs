@@ -65,25 +65,35 @@ namespace HandoverTracker.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
+            ViewBag.RoleList = GetRoleList();
             return View();
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize(Roles = "Admin")]        
-        public ActionResult Register(RegisterViewModel model)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Register(RegisterViewModel model, FormCollection collection)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.UserName, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email };
                 var result = UserManager.Create(user, model.Password);
-                
+
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "Team Member");
+                    ApplicationDbContext _db = new ApplicationDbContext();
+                    var allRoles = _db.Roles.Select(r => r.Name).ToList();
+                    foreach (var item in allRoles)
+                    {
+                        if (collection[item] == "on")
+                        {
+                            UserManager.AddToRole(user.Id, item);
+                        }
+                    }
                     return RedirectToAction("Index", "Users");
                 }
                 else
@@ -142,7 +152,7 @@ namespace HandoverTracker.Controllers
         public ActionResult ManageUserInfo(UserViewModel model)
         {
             var tuple = new Tuple<UserViewModel, ManageUserViewModel>(model, new ManageUserViewModel());
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -154,7 +164,8 @@ namespace HandoverTracker.Controllers
                     _db.Entry(user).State = EntityState.Modified;
                     _db.SaveChanges();
                     return RedirectToAction("Manage", new { Message = ManageMessageId.SaveUserSuccess });
-                }catch
+                }
+                catch
                 {
                     return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
 
@@ -413,7 +424,8 @@ namespace HandoverTracker.Controllers
 
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 
@@ -437,6 +449,22 @@ namespace HandoverTracker.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+        }
+
+        private List<SelectListItem> GetRoleList()
+        {
+            ApplicationDbContext _db = new ApplicationDbContext();
+            var allRoles = _db.Roles.Select(r => r.Name).ToList();
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var item in allRoles)
+            {
+                var si = new SelectListItem();
+                si.Text = item;
+                si.Value = item;
+                list.Add(si);
+            }
+
+            return list;
         }
         #endregion
     }

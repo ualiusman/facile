@@ -4,72 +4,78 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
+<fieldset>
+    <legend>@ViewBag.Title</legend>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="row">
-        <div class="large-12 columns">
-            <h4>Create a new user.</h4>
-            <hr />
-            @Html.ValidationSummary()
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="large-12 columns">
+                @Html.ValidationSummary()
+            </div>
         </div>
-    </div>
-   
-   
-    <div class="row">
-        <div class="large-12 columns">
-            <label>
-                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", required = "required" })
-            </label>
+
+
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", required = "required" })
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-6 columns">
-            <label>
-                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "required", type = "text" })
-            </label>
+        <div class="row">
+            <div class="large-6 columns">
+                <label>
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "required", type = "text" })
+                </label>
+            </div>
+            <div class="large-6 columns">
+                <label>
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "required", type = "text" })
+                </label>
+            </div>
         </div>
-        <div class="large-6 columns">
-            <label>
-                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "required", type = "text" })
-            </label>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required", type = "email" })
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>
-                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required", type = "email" })
-            </label>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    <label>Roles</label>
+                    @Html.CheckBoxList((List<SelectListItem>)ViewBag.RoleList)
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", required = "required" })
-            </label>
+        <div class="row">
+            <div class="large-6 columns">
+                <label>
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", required = "required" })
+                </label>
+            </div>
+            <div class="large-6 columns">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", required = "required" })
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", required = "required" })
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    <button type="submit" value="Register">Create</button>
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>
-                <button type="submit" value="Register">Create</button>
-            </label>
-        </div>
-    </div>
-}
+    }
+</fieldset>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
