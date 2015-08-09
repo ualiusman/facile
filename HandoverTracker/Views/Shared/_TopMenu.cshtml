@@ -9,7 +9,7 @@
             { 
             <li><a href="~/Users/Index">Users</a></li>
             }
-            @if (User.IsInRole("Admin") || User.IsInRole("Product Owner"))
+            @if (User.IsInRole("Admin") || User.IsInRole("Product Owner") || User.IsInRole("Scrum Master"))
             {
                 <li><a href="~/Activty/Index">Activties</a></li>
                 <li><a href="~/Artifact/Index">Artifacts</a></li>

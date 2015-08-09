@@ -8,13 +8,14 @@ using System.Web.Mvc;
 
 namespace HandoverTracker.Controllers
 {
-    [Authorize(Roles="Admin, Product Owner")]
+    [Authorize]
     public class ArtifactController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
         //
         // GET: /Artifact/
+        [Authorize(Roles = "Admin, Product Owner, Scrum Master")]
         public ActionResult Index()
         {
             var artifacts = _db.Artifacts.Where(a => a.IsDeleted == false);
@@ -23,6 +24,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Artifact/Details/5
+        [Authorize(Roles = "Admin, Product Owner, Scrum Master")]
         public ActionResult Details(int id)
         {
             return View();
@@ -30,6 +32,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Artifact/Create
+        [Authorize(Roles = "Admin, Product Owner")]
         public ActionResult Create()
         {
             return View();
@@ -38,13 +41,14 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Artifact/Create
         [HttpPost]
+        [Authorize(Roles = "Admin, Product Owner")]
         public ActionResult Create(Artifact model)
         {
             try
             {
                 model.IsDeleted = false;
                 model.IsDeletable = true;
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     _db.Artifacts.Add(model);
                     _db.SaveChanges();
@@ -61,10 +65,11 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Artifact/Edit/5
+        [Authorize(Roles = "Admin, Product Owner")]
         public ActionResult Edit(long id)
         {
-           var artifact =  _db.Artifacts.Find(id);
-            if(artifact.IsDeletable)
+            var artifact = _db.Artifacts.Find(id);
+            if (artifact.IsDeletable)
                 return View(artifact);
             else
                 return RedirectToAction("Index");
@@ -73,6 +78,7 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Artifact/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin, Product Owner")]
         public ActionResult Edit(long id, Artifact model)
         {
             try
@@ -89,8 +95,8 @@ namespace HandoverTracker.Controllers
                         _db.SaveChanges();
                     }
                 }
-                    return RedirectToAction("Index");
-                
+                return RedirectToAction("Index");
+
             }
             catch
             {
@@ -100,6 +106,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Artifact/Delete/5
+        [Authorize(Roles = "Admin, Product Owner")]
         public ActionResult Delete(long id)
         {
             var artifact = _db.Artifacts.Find(id);
@@ -112,13 +119,14 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Artifact/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin, Product Owner")]
         public ActionResult Delete(int id, Artifact model)
         {
             try
             {
                 // TODO: Add delete logic here
                 var artifact = _db.Artifacts.Find(id);
-                
+
                 if (artifact.IsDeletable)
                 {
                     artifact.IsDeleted = true;

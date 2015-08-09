@@ -6,10 +6,12 @@
 
 <fieldset>
     <legend>@ViewBag.Title</legend>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    @if (User.IsInRole("Admin") || User.IsInRole("Product Owner"))
+     {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+     }
     <table style="width:100%;" class="responsive">
         <tr>
             <th width="30%">
@@ -31,8 +33,8 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @if(item.IsDeletable)
-                    { 
+                    @if(item.IsDeletable && (User.IsInRole("Admin") || User.IsInRole("Product Owner")))
+                    {
                         @Html.ActionLink("Edit", "Edit", new { id = item.ArtifacatID }) <span>|</span>
                         @Html.ActionLink("Delete", "Delete", new { id = item.ArtifacatID })
                     }

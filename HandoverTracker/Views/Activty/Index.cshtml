@@ -6,9 +6,12 @@
 
 <fieldset>
     <legend>@ViewBag.Title</legend>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    @if (User.IsInRole("Admin") || User.IsInRole("Product Owner"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
     <table style="width:100%;" class="responsive">
         <tr>
             <th width="50%">
@@ -27,38 +30,43 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                   @if(item.Type == 1)
-                   {
-                       <span>PDMangementActivties</span>
-                   }else if(item.Type == 2 )
-                   {
-                       <span>PDDevelopmentActivties</span>
-                       
-                   }else if(item.Type == 3)
-                   {
-                       <span>PDHandoverActivties</span>
-                       
-                   }
-                   else if(item.Type == 4)
-                   {
-                       <span>TMangementActivties</span>
-                       
-                   }else if(item.Type == 5)
-                   {
-                       <span>THandoverActivties</span>
-                       
-                   }else if(item.Type == 6)
-                   {
-                       <span>PTDManagementActivties</span>
-                       
-                   }else if(item.Type == 7)
-                   {
-                       <span>PTDHandoverActivties</span>
-                       
-                   }
+                    @if (item.Type == 1)
+                    {
+                        <span>PDMangementActivties</span>
+                    }
+                    else if (item.Type == 2)
+                    {
+                        <span>PDDevelopmentActivties</span>
+
+                    }
+                    else if (item.Type == 3)
+                    {
+                        <span>PDHandoverActivties</span>
+
+                    }
+                    else if (item.Type == 4)
+                    {
+                        <span>TMangementActivties</span>
+
+                    }
+                    else if (item.Type == 5)
+                    {
+                        <span>THandoverActivties</span>
+
+                    }
+                    else if (item.Type == 6)
+                    {
+                        <span>PTDManagementActivties</span>
+
+                    }
+                    else if (item.Type == 7)
+                    {
+                        <span>PTDHandoverActivties</span>
+
+                    }
                 </td>
                 <td>
-                    @if (item.IsDeletable)
+                    @if (item.IsDeletable && (User.IsInRole("Admin") || User.IsInRole("Product Owner")))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = item.ActivtyID }) <span>|</span>
                         @Html.ActionLink("Delete", "Delete", new { id = item.ActivtyID })

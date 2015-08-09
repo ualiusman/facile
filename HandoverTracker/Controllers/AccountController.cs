@@ -73,19 +73,18 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        [Authorize(Roles = "Admin")]        
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.UserName, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email };
                 var result = UserManager.Create(user, model.Password);
-                UserManager.AddToRole(user.Id, "Team Member");
+                
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    UserManager.AddToRole(user.Id, "Team Member");
+                    return RedirectToAction("Index", "Users");
                 }
                 else
                 {
@@ -408,7 +407,7 @@ namespace HandoverTracker.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Project");
             }
         }
 

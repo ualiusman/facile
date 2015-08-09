@@ -25,7 +25,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/
-        [Authorize(Roles = "Admin,Product Owner")]        
+        [Authorize(Roles = "Admin,Product Owner,Scrum Master")]        
         public ActionResult Index()
         {
             var activteis = _db.Activties.Where(f => f.IsDeleted == false);
@@ -34,6 +34,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/Details/5
+        [Authorize(Roles = "Admin,Product Owner,Scrum Master")]                
         public ActionResult Details(int id)
         {
             return View();
@@ -90,7 +91,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/Create
-        [Authorize(Roles = "Admin,Product Owner")]        
+        [Authorize(Roles = "Admin,Product Owner")]
         public ActionResult Create()
         {
             List<SelectListItem> activtyType = new List<SelectListItem>();
@@ -174,6 +175,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/Edit/5
+        [Authorize(Roles = "Admin,Product Owner")]        
         public ActionResult Edit(long id)
         {
 
@@ -278,6 +280,7 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Activty/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin,Product Owner")]        
         public ActionResult Edit(long id, FormCollection collection)
         {
             try
@@ -338,6 +341,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/Delete/5
+        [Authorize(Roles = "Admin,Product Owner")]
         public ActionResult Delete(long id)
         {
             Activty activty = _db.Activties.Find(id);
@@ -347,6 +351,7 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Activty/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin,Product Owner")]        
         public ActionResult Delete(long id, FormCollection collection)
         {
             try
