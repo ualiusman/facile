@@ -4,7 +4,7 @@
     ViewBag.Title = "Activty";
     Layout = "~/Views/Shared/_WorkLayout.cshtml";
 }
-
+<link href="~/Content/foundation-icons.css" rel="stylesheet" />
 <fieldset>
     <legend>@ViewBag.Title</legend>
     @using (Html.BeginForm())
@@ -33,6 +33,13 @@
                         <label><b>Input Artifact</b></label>
                         @Html.DisplayFor(model => model.Activty.InputArtifact.Name)
                     </label>
+                    @if (Model.Activty.InputArtifact != null)
+                    {
+                            <a href="#">
+                                <i class="fi-download"></i>
+                                <span>Download</span>
+                            </a>
+                    }
                 </div>
                 <div class="large-6 columns">
                     <label>
@@ -77,7 +84,7 @@
     }
 
     <div>
-        
-        @Html.ActionLink("Back to List", "Type", new { id =(int)Session["pat"]  })
+
+        @Html.ActionLink("Back to List", "Type", new { id = (int)Session["pat"] })
     </div>
 </fieldset>

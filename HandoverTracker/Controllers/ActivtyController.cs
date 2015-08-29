@@ -86,6 +86,7 @@ namespace HandoverTracker.Controllers
                 _db.Entry(activty).State = System.Data.Entity.EntityState.Modified;
                 _db.SaveChanges();
             }
+            ChangeProjectStatus();
             return View(activty);
         }
 
@@ -373,5 +374,30 @@ namespace HandoverTracker.Controllers
                 return View();
             }
         }
+
+
+
+
+        #region Methods
+        private void ChangeProjectStatus()
+        {
+
+            int c = _db.ProjectActivties.Where(f => f.ProjectID == CurProjectID && (f.Status == "Running" || f.Status == "Yet To Start")).Count();
+            Project p = _db.Projects.Find(CurProjectID);
+            if (p != null)
+            {
+                if (c > 0)
+                {
+                    p.Status = "Running";
+                }
+                else
+                {
+                    p.Status = "Done";
+                }
+            }
+            _db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
+        }
+        #endregion
     }
 }
