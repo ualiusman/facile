@@ -13,7 +13,8 @@ namespace HandoverTracker.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
-        private long CurProjectID {
+        private long CurProjectID
+        {
             get
             {
                 if (Session["CurProject"] != null)
@@ -25,7 +26,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/
-        [Authorize(Roles = "Admin,Product Owner,Scrum Master")]        
+        [Authorize(Roles = "Admin,Product Owner,Scrum Master")]
         public ActionResult Index()
         {
             var activteis = _db.Activties.Where(f => f.IsDeleted == false);
@@ -34,7 +35,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/Details/5
-        [Authorize(Roles = "Admin,Product Owner,Scrum Master")]                
+        [Authorize(Roles = "Admin,Product Owner,Scrum Master")]
         public ActionResult Details(int id)
         {
             return View();
@@ -43,26 +44,28 @@ namespace HandoverTracker.Controllers
         public ActionResult Type(int id)
         {
             List<ProjectActivty> pa = new List<ProjectActivty>();
-            
+
             var activties = _db.ProjectActivties.Where(f => f.Activty.Type == id && f.ProjectID == CurProjectID);
             foreach (var item in activties)
             {
                 foreach (var i in item.Activty.ActivtyRoles)
                 {
-                    if(User.IsInRole(i.RoleName))
+                    if (User.IsInRole(i.RoleName))
                     {
                         pa.Add(item);
                         break;
                     }
                 }
             }
-            Session["pat"] = id;           
+            Session["pat"] = id;
 
             return View(pa);
         }
 
         public ActionResult Work(long id)
         {
+            ViewBag.Artifacts = new List<string>();
+            ViewBag.IsScript = false;
             var activty = _db.ProjectActivties.Find(id);
             return View(activty);
         }
@@ -77,15 +80,16 @@ namespace HandoverTracker.Controllers
             long curProj = activty.ProjectID;
             _db.Entry(activty).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
-          
-            var na =   _db.ProjectActivties.Where(f => f.ProjectID == curProj && f.ActivtyID == nextActivty).First();
-            if( na != null)
-            { 
+
+            var na = _db.ProjectActivties.Where(f => f.ProjectID == curProj && f.ActivtyID == nextActivty).First();
+            if (na != null)
+            {
                 na.Status = "Running";
 
                 _db.Entry(activty).State = System.Data.Entity.EntityState.Modified;
                 _db.SaveChanges();
             }
+            ShowArtifactsModel(activty.Activty.Type);
             ChangeProjectStatus();
             return View(activty);
         }
@@ -97,13 +101,13 @@ namespace HandoverTracker.Controllers
         {
             List<SelectListItem> activtyType = new List<SelectListItem>();
             List<SelectListItem> roles = new List<SelectListItem>();
-            activtyType.Add(new SelectListItem(){ Text="PDMangementActivties", Value="1"});
-            activtyType.Add(new SelectListItem(){ Text="PDDevelopmentActivties", Value="2"});
-            activtyType.Add(new SelectListItem(){ Text="PDHandoverActivties", Value="3"});
-            activtyType.Add(new SelectListItem(){ Text="TMangementActivties", Value="4"});
-            activtyType.Add(new SelectListItem(){ Text="THandoverActivties", Value="5"});
-            activtyType.Add(new SelectListItem(){ Text="PTDManagementActivties", Value="6"});
-            activtyType.Add(new SelectListItem(){ Text="PTDHandoverActivties", Value="7"});
+            activtyType.Add(new SelectListItem() { Text = "PDMangementActivties", Value = "1" });
+            activtyType.Add(new SelectListItem() { Text = "PDDevelopmentActivties", Value = "2" });
+            activtyType.Add(new SelectListItem() { Text = "PDHandoverActivties", Value = "3" });
+            activtyType.Add(new SelectListItem() { Text = "TMangementActivties", Value = "4" });
+            activtyType.Add(new SelectListItem() { Text = "THandoverActivties", Value = "5" });
+            activtyType.Add(new SelectListItem() { Text = "PTDManagementActivties", Value = "6" });
+            activtyType.Add(new SelectListItem() { Text = "PTDHandoverActivties", Value = "7" });
 
             ViewBag.InputArtifacts = _db.Artifacts.Where(f => f.IsDeleted == false).ToList().Select(a => new SelectListItem() { Value = Convert.ToString(a.ArtifacatID), Text = a.Name }).ToList();
             ViewBag.OutputArtifacts = _db.Artifacts.Where(f => f.IsDeleted == false).ToList().Select(a => new SelectListItem() { Value = Convert.ToString(a.ArtifacatID), Text = a.Name }).ToList();
@@ -122,16 +126,16 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Activty/Create
         [HttpPost]
-        [Authorize(Roles = "Admin,Product Owner")]        
+        [Authorize(Roles = "Admin,Product Owner")]
         public ActionResult Create(FormCollection collection)
         {
             try
             {
                 string name = collection["Name"];
-                long input = Convert.ToInt64( collection["InputArtifacts"]);
+                long input = Convert.ToInt64(collection["InputArtifacts"]);
                 long output = Convert.ToInt64(collection["OutputArtifacts"]);
                 long type = Convert.ToInt64(collection["ActivtyType"]);
-                if(!string.IsNullOrEmpty(name))
+                if (!string.IsNullOrEmpty(name))
                 {
                     Activty activty = new Activty();
                     List<ActivtyRole> activtyRoles = new List<ActivtyRole>();
@@ -147,16 +151,16 @@ namespace HandoverTracker.Controllers
                         activty.OutputArtifact = OArtifact;
                     _db.Activties.Add(activty);
                     _db.SaveChanges();
-                    if(collection["Scrum Master"] == "on")
+                    if (collection["Scrum Master"] == "on")
                     {
                         activtyRoles.Add(new ActivtyRole() { ActivtyID = activty.ActivtyID, RoleName = "Scrum Master" });
                     }
-                    if(collection["Product Owner"] == "on")
+                    if (collection["Product Owner"] == "on")
                     {
                         activtyRoles.Add(new ActivtyRole() { ActivtyID = activty.ActivtyID, RoleName = "Product Owner" });
-                        
+
                     }
-                    if(collection["Team Member"] == "on")
+                    if (collection["Team Member"] == "on")
                     {
                         activtyRoles.Add(new ActivtyRole() { ActivtyID = activty.ActivtyID, RoleName = "Team Member" });
                     }
@@ -176,7 +180,7 @@ namespace HandoverTracker.Controllers
 
         //
         // GET: /Activty/Edit/5
-        [Authorize(Roles = "Admin,Product Owner")]        
+        [Authorize(Roles = "Admin,Product Owner")]
         public ActionResult Edit(long id)
         {
 
@@ -187,7 +191,7 @@ namespace HandoverTracker.Controllers
 
             List<SelectListItem> activtyType = new List<SelectListItem>();
             List<SelectListItem> roles = new List<SelectListItem>();
-            
+
             activtyType.Add(new SelectListItem() { Text = "PDMangementActivties", Value = "1" });
             activtyType.Add(new SelectListItem() { Text = "PDDevelopmentActivties", Value = "2" });
             activtyType.Add(new SelectListItem() { Text = "PDHandoverActivties", Value = "3" });
@@ -198,14 +202,14 @@ namespace HandoverTracker.Controllers
 
             foreach (var item in activtyType)
             {
-                if(item.Value == activty.ActivtyID.ToString())
+                if (item.Value == activty.ActivtyID.ToString())
                 {
                     item.Selected = true;
                 }
             }
 
             List<Artifact> ias = _db.Artifacts.Where(f => f.IsDeleted == false).ToList();
-            List<Artifact> oas= _db.Artifacts.Where(f => f.IsDeleted == false).ToList();
+            List<Artifact> oas = _db.Artifacts.Where(f => f.IsDeleted == false).ToList();
 
             List<SelectListItem> ia = new List<SelectListItem>();
             List<SelectListItem> oa = new List<SelectListItem>();
@@ -215,9 +219,9 @@ namespace HandoverTracker.Controllers
                 SelectListItem i = new SelectListItem();
                 i.Text = item.Name;
                 i.Value = item.ArtifacatID.ToString();
-                if(activty.InputArtifact != null)
+                if (activty.InputArtifact != null)
                 {
-                    if(item.ArtifacatID == activty.InputArtifact.ArtifacatID)
+                    if (item.ArtifacatID == activty.InputArtifact.ArtifacatID)
                     {
                         i.Selected = true;
                     }
@@ -262,7 +266,7 @@ namespace HandoverTracker.Controllers
             {
                 foreach (var i2 in roles)
                 {
-                    if(i2.Value == item.RoleName)
+                    if (i2.Value == item.RoleName)
                     {
                         i2.Selected = true;
                     }
@@ -271,17 +275,17 @@ namespace HandoverTracker.Controllers
 
             ViewBag.Roles = roles;
 
-            
-            
-            
-            
+
+
+
+
             return View(activty);
         }
 
         //
         // POST: /Activty/Edit/5
         [HttpPost]
-        [Authorize(Roles = "Admin,Product Owner")]        
+        [Authorize(Roles = "Admin,Product Owner")]
         public ActionResult Edit(long id, FormCollection collection)
         {
             try
@@ -352,18 +356,18 @@ namespace HandoverTracker.Controllers
         //
         // POST: /Activty/Delete/5
         [HttpPost]
-        [Authorize(Roles = "Admin,Product Owner")]        
+        [Authorize(Roles = "Admin,Product Owner")]
         public ActionResult Delete(long id, FormCollection collection)
         {
             try
             {
-               Activty activty =  _db.Activties.Find(id);
-               if(activty.IsDeletable)
-               {
-                   activty.IsDeleted = true;
-                   _db.Entry(activty).State = EntityState.Modified;
-                   _db.SaveChanges();
-               }
+                Activty activty = _db.Activties.Find(id);
+                if (activty.IsDeletable)
+                {
+                    activty.IsDeleted = true;
+                    _db.Entry(activty).State = EntityState.Modified;
+                    _db.SaveChanges();
+                }
 
                 // TODO: Add delete logic here
 
@@ -397,6 +401,64 @@ namespace HandoverTracker.Controllers
             }
             _db.Entry(p).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
+        }
+
+        private void ShowArtifactsModel(long id)
+        {
+            bool isScript = false;
+            List<String> artifacts = new List<string>();
+            if (id == 1 || id == 2 || id == 3)
+            {
+                int val = _db.ProjectActivties.Where(f => f.ProjectID == CurProjectID
+                      && (f.Activty.Type == 1 || f.Activty.Type == 2 || f.Activty.Type == 3)
+                      && (f.Status == "Running" || f.Status == "Yet To Start")).Count();
+                if (val == 0)
+                {
+                    var act = _db.Activties.Where(f => f.Type == 1 || f.Type == 2 || f.Type == 3).ToList();
+                    foreach (var i in act)
+                    {
+                        if (i.OutputArtifact != null)
+                           artifacts.Add(i.OutputArtifact.Name);
+                    }
+                    isScript = true;
+                }
+            }
+            else if (id == 4 || id == 5)
+            {
+                int val = _db.ProjectActivties.Where(f => f.ProjectID == CurProjectID
+                  && (f.Activty.Type == 4 || f.Activty.Type == 5)
+                  && (f.Status == "Running" || f.Status == "Yet To Start")).Count();
+                if (val == 0)
+                {
+                    var act = _db.Activties.Where(f => f.Type == 4 || f.Type == 5).ToList();
+                    foreach (var i in act)
+                    {
+                        if (i.OutputArtifact != null)
+                            artifacts.Add(i.InputArtifact.Name);
+                    }
+                    isScript = true;
+
+                }
+            }
+            else if (id == 6 || id == 7)
+            {
+                int val = _db.ProjectActivties.Where(f => f.ProjectID == CurProjectID
+          && (f.Activty.Type == 6 || f.Activty.Type == 7)
+          && (f.Status == "Running" || f.Status == "Yet To Start")).Count();
+                if (val == 0)
+                {
+                    var act = _db.Activties.Where(f => f.Type == 6 || f.Type == 7).ToList();
+                    foreach (var i in act)
+                    {
+                        if (i.OutputArtifact != null)
+                            artifacts.Add(i.InputArtifact.Name);
+                    }
+                    isScript = true;
+
+                }
+            }
+            ViewBag.Artifacts = artifacts;
+            ViewBag.IsScript = isScript;
         }
         #endregion
     }
