@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -89,9 +90,51 @@ namespace HandoverTracker.Controllers
                 _db.Entry(activty).State = System.Data.Entity.EntityState.Modified;
                 _db.SaveChanges();
             }
+
+            if (Request.Files.Count > 0)
+            {
+
+                HttpPostedFileBase file = (HttpPostedFileBase)Request.Files[0];
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    if (activty.Activty.OutputArtifact != null)
+                    {
+                        string fName = activty.Activty.OutputArtifact.Name + fileExtension;
+                        string pName = activty.Project.Name;
+                        string pathName = @"~/Files/ " + pName;
+                        bool exists = System.IO.Directory.Exists(Server.MapPath(pathName));
+                        if (!exists)
+                            System.IO.Directory.CreateDirectory(Server.MapPath(pathName));
+
+                        var path = Path.Combine(Server.MapPath(pathName), fName);
+                        file.SaveAs(path);
+                    }
+                }
+            }
+
             ShowArtifactsModel(activty.Activty.Type);
             ChangeProjectStatus();
             return View(activty);
+        }
+
+        public FileResult Download(long id)
+        {
+            var activty = _db.ProjectActivties.Find(id);
+            string pName = activty.Project.Name;
+            string pathName = @"~/Files/ " + pName + "/";
+            string fName = activty.Activty.InputArtifact.Name;
+            string[] files = Directory.GetFiles(Server.MapPath(pathName), fName + ".*");
+            if (files.Count() > 0)
+            { 
+               
+                string path = Path.Combine(Server.MapPath(pathName), Path.GetFileName(files[0]));
+                byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName( files[0]));
+            }
+            else
+                return null;
         }
 
         //

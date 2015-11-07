@@ -7,7 +7,7 @@
 <link href="~/Content/foundation-icons.css" rel="stylesheet" />
 <fieldset>
     <legend>@ViewBag.Title</legend>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Work","Activty",FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -60,12 +60,12 @@
                         @Html.DisplayFor(model => model.Activty.InputArtifact.Name)
                     </label>
                     @if (Model.Activty.InputArtifact != null)
-                    {
-                        <a href="#">
-                            <i class="fi-download"></i>
-                            <span>Download</span>
-                        </a>
-                    }
+                        {
+                            <a href="~/Activty/Download/ @Model.Activty.ActivtyID">
+                                <i class="fi-download"></i>
+                                <span>Download</span>
+                            </a>
+                        }
                 </div>
                 <div class="large-6 columns">
                     <label>
